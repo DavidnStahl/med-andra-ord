@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Main from './Components/Main'
+import GameSettingsContextProvider from './Contexts/GameSettingsContext';
+import ScoresContextProvider from './Contexts/ScoresContext';
+import WordsContextProvider from './Contexts/WordsContext';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <GameSettingsContextProvider>
+    <ScoresContextProvider>
+    <WordsContextProvider>
+      <Main/>
+    </WordsContextProvider>
+    </ScoresContextProvider>
+    </GameSettingsContextProvider>
     </div>
   );
 }
