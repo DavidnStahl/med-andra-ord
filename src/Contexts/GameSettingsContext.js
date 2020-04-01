@@ -4,8 +4,11 @@ export const GameSettingsContext = createContext();
 
 
 const GameSettingsContextProvider = (props) => {
+
+
     
      return (
+       
           <GameSettingsContext.Provider value={[]}>
             {props.children}
           </GameSettingsContext.Provider>

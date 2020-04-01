@@ -7,7 +7,7 @@ const Home = () => {
 
     return (
         <React.Fragment>
-        <h1>Välkommna till Med Andra Ord</h1>
+        <br/><br/><br/><h2>Välkomna till Med Andra Ord</h2><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <Button variant="contained" color="primary" onClick={() => {history.push('/GameSettings')}}>Börja spela</Button>
         </React.Fragment>
     )
