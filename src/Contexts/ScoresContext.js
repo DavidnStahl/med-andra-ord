@@ -1,4 +1,4 @@
-import React, {createContext,useState,useEffect} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const ScoresContext = createContext();
 
@@ -8,12 +8,12 @@ const ScoresContextProvider = (props) => {
   const [totalScore, setTotalScore] = useState({});
 
 
-    
-     return (
-          <ScoresContext.Provider value={[score, setScore]}>
-            {props.children}
-          </ScoresContext.Provider>
-  )   
+
+  return (
+    <ScoresContext.Provider value={[score, setScore]}>
+      {props.children}
+    </ScoresContext.Provider>
+  )
 }
 
 export default ScoresContextProvider

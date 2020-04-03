@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Button, LinearProgress } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
@@ -6,6 +6,7 @@ import { GameViewContext } from '../Contexts/GameViewContext'
 import { WordsContext } from '../Contexts/WordsContext'
 import { ScoresContext } from '../Contexts/ScoresContext'
 import { GameSettingsContext } from '../Contexts/GameSettingsContext'
+import LoadingScreen from './LoadingScreen'
 
 const RightAnwserButton = styled(Button)({
     background: '  rgba(82,255,125,1)',
@@ -33,15 +34,19 @@ const GameView = () => {
     const [word, setWord, getWords, wordProcessed] = useContext(WordsContext)
     const [score, setScore] = useContext(ScoresContext)
     const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue] = useContext(GameSettingsContext)
+    const [timeIsUp, setTimeIsUp] = useState(false);
 
 
-
+    const timesOut = () => {
+        console.log("time is out");
+    }
     useEffect(() => {
         const interval = setInterval(() => {
             setCount(() => {
                 if (count > 0) {
                     return count - 1;
                 } else {
+                    timesOut();
                     return count + 1
                 }
             })
@@ -76,6 +81,13 @@ const GameView = () => {
             }}>Rätt svar</RightAnwserButton><br /><br /><NextButton onClick={() => handleProcessedWord()}>Nästa ord</NextButton><br /><br /><br /><br /><br /><br /><br />
             <Button variant="contained" color="primary" onClick={() => { history.push('/GameSettings') }}>Gå tillbaka till konfiguering</Button><br /><br />
             <Button variant="contained" color="secondary" onClick={() => history.push('/')}>Gå tillbaka till start</Button>
+
+            {timeIsUp ? (
+                <LoadingScreen NextTeam={3} />
+            ) : (
+                    <h1>Hello</h1>
+                )}
+
 
         </React.Fragment>
     )
