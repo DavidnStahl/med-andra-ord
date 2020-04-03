@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useContext,useEffect,useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, FormControl, MenuItem, InputLabel, Select, Typography, Slider } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import {GameSettingsContext} from '../Contexts/GameSettingsContext'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -51,10 +52,23 @@ const timeMarks = [
 ]
 
 const GameSettings = () => {
-    const history = useHistory();
+   const history = useHistory();
+   /*
     const [noOfTeams, setNoOfTeams] = useState('2');
     const [noOfRounds, setNoOfRounds] = useState('10');
-    const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState('10');
+    const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState(20);*/
+    const [noOfTeams,
+         setNoOfTeams,
+         noOfRounds,
+          setNoOfRounds,
+          noOfSecondsPerRound,
+           setNoOfSecondsPerRound,
+           count,
+            setcount] = useContext(GameSettingsContext)
+
+    useEffect(() => {
+        
+    }, [setNoOfSecondsPerRound])
     const classes = useStyles();
 
     const handleNoOfTeamsChange = (event) => {
@@ -67,14 +81,17 @@ const GameSettings = () => {
         setNoOfRounds(event.target.value);
     }
 
-    const handleNoOfSecondsPerRoundChange = (event) => {
-        console.log(event.target.value);
-        setNoOfSecondsPerRound(event.target.value);
-    }
+    const handleNoOfSecondsPerRoundChange = ((event, value) => {
+        console.log(noOfSecondsPerRound)
+        setNoOfSecondsPerRound(value);
+        setcount(value)
+    })
 
     const getValueText = (value) => {
         return `${value} sekunder`;
     }
+
+
 
     return (
         <React.Fragment>
@@ -133,7 +150,7 @@ const GameSettings = () => {
                 getAriaValueText={getValueText}
                 aria-labelledby="discrete-slider-custom"
             />
-        </React.Fragment >
+        </React.Fragment>
     )
 }
 

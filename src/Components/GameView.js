@@ -1,39 +1,69 @@
-import React,{useContext,useEffect,useState} from 'react';
+import React,{useEffect,useContext} from 'react';
 import { Button, LinearProgress } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
 import {useHistory} from 'react-router';
+import {GameViewContext} from '../Contexts/GameViewContext'
+import {WordsContext} from '../Contexts/WordsContext'
+import {ScoresContext} from '../Contexts/ScoresContext'
+import {GameSettingsContext} from '../Contexts/GameSettingsContext'
+
+const RightAnwserButton = styled(Button)({
+    background: '  rgba(82,255,125,1)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+  });
+
+  const NextButton = styled(Button)({
+    background: 'rgba(255,157,82,1)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+  });
 
 
 const GameView = () => {
 
-    const [progressValue, setProgressValue] = useState(1);
-    const [count, setcount] = useState(60);
+    const [word, setWord, getWords] = useContext(WordsContext)
+    const [score,setScore] = useContext(ScoresContext)
+    const [noOfTeams, setNoOfTeams,noOfRounds, setNoOfRounds,noOfSecondsPerRound, setNoOfSecondsPerRound,count,setcount,progressValue, setProgressValue] = useContext(GameSettingsContext)
 
-    useEffect(() => {
-        const interval = setInterval(() => {
+    useEffect(() => {       
+        const interval = setInterval(() => {                     
             setcount(() =>{
-                return count - 1;
-            })
+                if(count > 0){return count - 1;
+            }else{
+                return count + 1}})
             setProgressValue(() => {
-                return progressValue + 1.7
-            });
-          
-          }, 1000);
+                if(count > 0){return progressValue + (100/noOfSecondsPerRound)}
+                else
+                {return 0}});
+            }, 1000);
           return () => clearInterval(interval);
         
-    },[progressValue])
+    },[progressValue,word])
     
-
-    
-
     const history = useHistory();
     return (
         <React.Fragment>
             <br/>
-            <h1>Antal rätt: 4</h1>
+            <h1>Antal rätt: {score}</h1>
             <h1>Tid: {count}</h1>
-            <LinearProgress variant="determinate" value={progressValue} /><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <h1>Hockeyspelare</h1><br/>            
-            <Button variant="contained" color="secondary">Nästa ord</Button><br/><br/><br/><br/><br/><br/><br/>                    
+            <LinearProgress variant="determinate" value={progressValue} /><br/><br/><br/><br/><br/><br/><br/>
+            <h1>{word}</h1><br/>
+                        
+            <RightAnwserButton  onClick={() => {
+               getWords()
+               setScore(() =>{
+                   return score + 1
+               })
+            }}>Rätt svar</RightAnwserButton><br/><br/><NextButton  onClick={() => getWords()}>Nästa ord</NextButton><br/><br/><br/><br/><br/><br/><br/>                    
             <Button variant="contained" color="primary" onClick={() => {history.push('/GameSettings')}}>Gå tillbaka till konfiguering</Button><br/><br/>
             <Button variant="contained" color="secondary" onClick={() => history.push('/')}>Gå tillbaka till start</Button>
             

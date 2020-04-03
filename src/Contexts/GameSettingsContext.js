@@ -4,12 +4,17 @@ export const GameSettingsContext = createContext();
 
 
 const GameSettingsContextProvider = (props) => {
+  const [noOfTeams, setNoOfTeams] = useState('2');
+    const [noOfRounds, setNoOfRounds] = useState('10');
+    const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState(20);
+    const [progressValue, setProgressValue] = useState(0);
+    const [count, setcount] = useState(noOfSecondsPerRound);
 
 
 
   return (
 
-    <GameSettingsContext.Provider value={[]}>
+    <GameSettingsContext.Provider value={[noOfTeams, setNoOfTeams,noOfRounds, setNoOfRounds,noOfSecondsPerRound, setNoOfSecondsPerRound,count, setcount,progressValue, setProgressValue]}>
       {props.children}
     </GameSettingsContext.Provider>
   )

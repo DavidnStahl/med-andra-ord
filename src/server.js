@@ -5,6 +5,11 @@ const app = express();
 
 const port = process.env.PORT || 1337;
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.listen(port, () => {
   console.log('listening at', port);
 });
@@ -41,7 +46,6 @@ app.get('/words', (req, res) => {
     res.json(data);
   });
 });
-
 app.get('/word/random', (req, res) => {
   getRandomWord().then(word => {
     console.log(word);
