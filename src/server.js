@@ -42,13 +42,13 @@ function getRandomInt(max) {
 
 app.get('/words', (req, res) => {
   getWordsFromWordsFile().then(data => {
-    console.log(data);
+
     res.json(data);
   });
 });
 app.get('/word/random', (req, res) => {
   getRandomWord().then(word => {
-    console.log(word);
+
     res.json(word);
   });
 });

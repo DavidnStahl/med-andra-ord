@@ -1,8 +1,8 @@
-import React, { useState,useContext,useEffect,useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, FormControl, MenuItem, InputLabel, Select, Typography, Slider } from '@material-ui/core';
 import { useHistory } from 'react-router';
-import {GameSettingsContext} from '../Contexts/GameSettingsContext'
+import { GameSettingsContext } from '../Contexts/GameSettingsContext'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -47,28 +47,27 @@ const timeMarks = [
         value: 60,
         label: "60"
     }
-
-
 ]
 
 const GameSettings = () => {
-   const history = useHistory();
-   /*
-    const [noOfTeams, setNoOfTeams] = useState('2');
-    const [noOfRounds, setNoOfRounds] = useState('10');
-    const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState(20);*/
+    const history = useHistory();
+    /*
+     const [noOfTeams, setNoOfTeams] = useState('2');
+     const [noOfRounds, setNoOfRounds] = useState('10');
+     const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState(20);*/
     const [noOfTeams,
-         setNoOfTeams,
-         noOfRounds,
-          setNoOfRounds,
-          noOfSecondsPerRound,
-           setNoOfSecondsPerRound,
-           count,
-            setcount] = useContext(GameSettingsContext)
+        setNoOfTeams,
+        noOfRounds,
+        setNoOfRounds,
+        noOfSecondsPerRound,
+        setNoOfSecondsPerRound,
+        count,
+        setcount] = useContext(GameSettingsContext)
 
     useEffect(() => {
-        
-    }, [setNoOfSecondsPerRound])
+
+
+    }, [])
     const classes = useStyles();
 
     const handleNoOfTeamsChange = (event) => {
