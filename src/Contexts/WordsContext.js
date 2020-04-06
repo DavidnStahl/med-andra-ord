@@ -1,46 +1,95 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
+//import fs from 'fs';
 
 export const WordsContext = createContext();
-const API = 'http://localhost:1337/words';
+//const API = 'http://localhost:1337/words';
+
+const data = [
+  {
+    "word": "corona"
+  },
+  {
+    "word": "sally"
+  },
+  {
+    "word": "coronafall"
+  },
+  {
+    "word": "brother"
+  },
+  {
+    "word": "ciara"
+  },
+  {
+    "word": "världsrekord"
+  },
+  {
+    "word": "nanne"
+  },
+  {
+    "word": "sport-bloggen"
+  },
+  {
+    "word": "deltagaren"
+  },
+  {
+    "word": "världsrekordet"
+  },
+  {
+    "word": "arbetskraftsinvandring"
+  },
+  {
+    "word": "ferm"
+  },
+  {
+    "word": "elma"
+  },
+  {
+    "word": "skidskytte-vm"
+  },
+  {
+    "word": "efterfesten"
+  },
+  {
+    "word": "faith"
+  },
+  {
+    "word": "äventyr"
+  },
+  {
+    "word": "coronautbrottet"
+  },
+  {
+    "word": "kryssningsfartyget"
+  },
+  {
+    "word": "jämställda"
+  },
+  {
+    "word": "norgren"
+  },
+  {
+    "word": "t-centralen"
+  },
+  {
+    "word": "öfk"
+  }
+];
 
 
 
 const WordsContextProvider = (props) => {
-  const [word, setWord] = useState({ "word": "testword", "index": 0 });
-  const [wordList, setWordList] = useState([]);
+  const [word, setWord] = useState({
+    word: "",
+    index: 0
+  });
+  const [wordList, setWordList] = useState(data);
 
   useEffect(() => {
-    fetchWords().then(() => {
-      getWords();
-    })
+    getWords();
   }, [])
 
-  const fetchWords = () => {
-    return new Promise((resolve, reject) => {
-      axios.get(API)
-        .then((response) => {
-          console.log(response.data);
-          console.log(wordList);
-
-          setWordList(() => {
-            console.log("setting setWordAll");
-            let wordArray = [];
-            response.data.map(row => {
-              wordArray.push(row.word);
-            })
-            return wordArray;
-          })
-        }).then(() => {
-          console.log("resolving");
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        })
-    })
-
-  }
 
   const wordProcessed = (processedWord) => {
     console.log(`processed word: ${JSON.stringify(processedWord)}`);
@@ -54,8 +103,8 @@ const WordsContextProvider = (props) => {
     setWord(() => {
       let wordIndex = getRandomInt(wordList.length);
       let wordObj = {
-        "word": wordList[wordIndex],
-        "index": wordIndex
+        word: wordList[wordIndex].word,
+        index: wordIndex
       };
       return wordObj;
     })
@@ -71,5 +120,6 @@ const WordsContextProvider = (props) => {
     </WordsContext.Provider>
   )
 }
+
 
 export default WordsContextProvider

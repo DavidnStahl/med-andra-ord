@@ -47,8 +47,11 @@ app.get('/words', (req, res) => {
   });
 });
 app.get('/word/random', (req, res) => {
+  console.log("GET /word/random, req = ", req);
   getRandomWord().then(word => {
 
     res.json(word);
-  });
+  }).catch(err => {
+    res.json(err);
+  })
 });
