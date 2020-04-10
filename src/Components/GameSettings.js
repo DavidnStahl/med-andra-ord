@@ -62,7 +62,10 @@ const GameSettings = () => {
         noOfSecondsPerRound,
         setNoOfSecondsPerRound,
         count,
-        setcount] = useContext(GameSettingsContext)
+        setcount,
+        setCurrentTeam,
+        setTurnOrder
+    ] = useContext(GameSettingsContext)
 
     useEffect(() => {
 
@@ -71,8 +74,17 @@ const GameSettings = () => {
     const classes = useStyles();
 
     const handleNoOfTeamsChange = (event) => {
-        console.log(event.target.value);
-        setNoOfTeams(event.target.value);
+        let numberOfTeams = event.target.value;
+        setNoOfTeams(numberOfTeams);
+
+        let turnOrder = [];
+
+        for (let index = 1; index <= numberOfTeams; index++) {
+            turnOrder.push(index);
+        }
+        setTurnOrder(turnOrder);
+        console.log("nofOfTeams = ", numberOfTeams);
+        console.log("turnOrder = ", turnOrder);
     }
 
     const handleNoOfRoundsChange = (event) => {

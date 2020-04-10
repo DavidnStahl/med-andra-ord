@@ -12,8 +12,16 @@ const GameView = () => {
 
     const [word, setWord, getWords, wordProcessed] = useContext(WordsContext)
     const [score, setScore] = useContext(ScoresContext)
-    const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue] = useContext(GameSettingsContext)
+    const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder] = useContext(GameSettingsContext)
     const [LoadingprogressValue, setLoadingProgressValue, Loadingcounter, setLoadingcounter] = useContext(LoadingScreenContext)
+
+    const endTurn = () => {
+
+        console.log("team: " + currentTeam + " ended with " + score + " correct answers");
+
+        setCurrentTeam(currentTeam+1);
+        
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -21,7 +29,10 @@ const GameView = () => {
                 if (count > 0) {
                     setLoadingcounter(5)
                     return count - 1;
-                } else { return - 1 }
+                } else {
+                    endTurn();
+                     return - 1 
+                    }
             })
             setProgressValue(() => {
                 if (count > 0) { return progressValue + (100 / noOfSecondsPerRound) }
@@ -32,7 +43,7 @@ const GameView = () => {
     }, [progressValue, word, count])
 
     return (
-        <React.Fragment>{count < 0 ? <LoadingScreen NextTeam={3} /> : <WordPanel />}</React.Fragment>
+        <React.Fragment>{count < 0 ? <LoadingScreen NextTeam={currentTeam} /> : <WordPanel />}</React.Fragment>
     )
 }
 

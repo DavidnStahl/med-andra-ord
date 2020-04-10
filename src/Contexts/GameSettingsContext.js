@@ -9,12 +9,14 @@ const GameSettingsContextProvider = (props) => {
   const [noOfSecondsPerRound, setNoOfSecondsPerRound] = useState(20);
   const [progressValue, setProgressValue] = useState(0);
   const [count, setCount] = useState(noOfSecondsPerRound);
+  const [currentTeam, setCurrentTeam] = useState(1);
+  const [turnOrder, setTurnOrder] = useState([1, 2]);
 
 
 
   return (
 
-    <GameSettingsContext.Provider value={[noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue]}>
+    <GameSettingsContext.Provider value={[noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder]}>
       {props.children}
     </GameSettingsContext.Provider>
   )
