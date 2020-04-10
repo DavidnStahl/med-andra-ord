@@ -11,6 +11,7 @@ const GameSettingsContextProvider = (props) => {
   const [count, setCount] = useState(noOfSecondsPerRound);
   const [currentTeam, setCurrentTeam] = useState(1);
   const [turnOrder, setTurnOrder] = useState([1, 2]);
+  const [currentRound, setCurrentRound] = useState(1);
 
 
 

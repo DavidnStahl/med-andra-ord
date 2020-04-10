@@ -68,7 +68,7 @@ const GameSettings = () => {
         setTurnOrder
     ] = useContext(GameSettingsContext)
 
-    const [scoreByTeam, setScoreByTeam] = useContext(ScoresContext);
+    const [score, setScore,scoreByTeam, setScoreByTeam] = useContext(ScoresContext);
 
     useEffect(() => {
 

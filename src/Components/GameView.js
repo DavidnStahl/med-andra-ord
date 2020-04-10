@@ -12,7 +12,7 @@ const GameView = () => {
 
     const [word, setWord, getWords, wordProcessed] = useContext(WordsContext)
     const [score, setScore, scoreByTeam, setScoreByTeam] = useContext(ScoresContext)
-    const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder] = useContext(GameSettingsContext)
+    const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder, currentRound, setCurrentRound] = useContext(GameSettingsContext)
     const [LoadingprogressValue, setLoadingProgressValue, Loadingcounter, setLoadingcounter] = useContext(LoadingScreenContext)
 
     const endTurn = () => {
@@ -23,23 +23,33 @@ const GameView = () => {
 
         let newScoreByTeam = scoreByTeam;
         console.log("newscoreByTeam=", newScoreByTeam);
-        //newScoreByTeam[currentTeam+1].score = score;
-        setCurrentTeam(currentTeam+1);
+        newScoreByTeam[currentTeam-1].score = score;
         console.log("newscore = " + newScoreByTeam);
         setScoreByTeam(newScoreByTeam);
+
+        if (noOfTeams > currentTeam) {
+            setCurrentTeam(currentTeam+1);
+        } else {
+            //new round
+            setCurrentRound(currentRound +1);
+        }
+        
 
         
     }
 
     useEffect(() => {
+        
         const interval = setInterval(() => {
             setCount(() => {
                 if (count > 0) {
                     setLoadingcounter(5)
                     return count - 1;
                 } else {
-                    endTurn();
-                     return - 1 
+                    if (count == 0){
+                        endTurn();
+                    }
+                     return -1; 
                     }
             })
             setProgressValue(() => {
