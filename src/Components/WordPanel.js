@@ -28,7 +28,7 @@ const NextButton = styled(Button)({
 
 const WordPanel = () => {
     const [word, setWord, getWords, wordProcessed] = useContext(WordsContext)
-    const [score, setScore] = useContext(ScoresContext)
+    const [score, setScore, scoreByTeam, setScoreByTeam] = useContext(ScoresContext)
     const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue] = useContext(GameSettingsContext)
     const history = useHistory();
 
@@ -36,6 +36,7 @@ const WordPanel = () => {
         wordProcessed(word);
         getWords();
     }
+    console.log(score);
     return (
         <React.Fragment>
             <br />

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, FormControl, MenuItem, InputLabel, Select, Typography, Slider } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { GameSettingsContext } from '../Contexts/GameSettingsContext'
+import { ScoresContext } from '../Contexts/ScoresContext';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -67,6 +68,8 @@ const GameSettings = () => {
         setTurnOrder
     ] = useContext(GameSettingsContext)
 
+    const [scoreByTeam, setScoreByTeam] = useContext(ScoresContext);
+
     useEffect(() => {
 
 
@@ -78,13 +81,24 @@ const GameSettings = () => {
         setNoOfTeams(numberOfTeams);
 
         let turnOrder = [];
+        let scoreByTeamArray = [];
 
         for (let index = 1; index <= numberOfTeams; index++) {
             turnOrder.push(index);
+
+            scoreByTeamArray.push({
+                "team": index,
+                "score": 0
+            });
+
         }
+        console.log("scoreByTeamArray: ", scoreByTeamArray);
         setTurnOrder(turnOrder);
+        setScoreByTeam(scoreByTeamArray);
         console.log("nofOfTeams = ", numberOfTeams);
         console.log("turnOrder = ", turnOrder);
+
+        
     }
 
     const handleNoOfRoundsChange = (event) => {

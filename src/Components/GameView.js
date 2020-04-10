@@ -11,7 +11,7 @@ import WordPanel from './WordPanel'
 const GameView = () => {
 
     const [word, setWord, getWords, wordProcessed] = useContext(WordsContext)
-    const [score, setScore] = useContext(ScoresContext)
+    const [score, setScore, scoreByTeam, setScoreByTeam] = useContext(ScoresContext)
     const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder] = useContext(GameSettingsContext)
     const [LoadingprogressValue, setLoadingProgressValue, Loadingcounter, setLoadingcounter] = useContext(LoadingScreenContext)
 
@@ -19,7 +19,15 @@ const GameView = () => {
 
         console.log("team: " + currentTeam + " ended with " + score + " correct answers");
 
+        
+
+        let newScoreByTeam = scoreByTeam;
+        console.log("newscoreByTeam=", newScoreByTeam);
+        //newScoreByTeam[currentTeam+1].score = score;
         setCurrentTeam(currentTeam+1);
+        console.log("newscore = " + newScoreByTeam);
+        setScoreByTeam(newScoreByTeam);
+
         
     }
 
