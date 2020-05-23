@@ -36,7 +36,6 @@ const WordPanel = () => {
         wordProcessed(word);
         getWords();
     }
-    console.log(score);
     return (
         <React.Fragment>
             <br />

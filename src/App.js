@@ -6,11 +6,13 @@ import ScoresContextProvider from './Contexts/ScoresContext';
 import WordsContextProvider from './Contexts/WordsContext';
 import GameViewContextProvider from './Contexts/GameViewContext';
 import LoadingScreenContextProvider from './Contexts/LoadingScreenContext';
+import Timer from './Components/Timer';
 
 
 function App() {
   return (
     <div className="App">
+
       <GameSettingsContextProvider>
         <ScoresContextProvider>
           <WordsContextProvider>
@@ -22,6 +24,18 @@ function App() {
           </WordsContextProvider>
         </ScoresContextProvider>
       </GameSettingsContextProvider>
+
+      {
+        /*
+        <ScoresContextProvider>
+        <GameViewContextProvider>
+          <Timer noOfSeconds={10} />
+        </GameViewContextProvider>
+      </ScoresContextProvider>
+      */
+      }
+
+
     </div>
   );
 }

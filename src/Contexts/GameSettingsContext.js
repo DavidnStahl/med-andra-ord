@@ -17,7 +17,7 @@ const GameSettingsContextProvider = (props) => {
 
   return (
 
-    <GameSettingsContext.Provider value={[noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder]}>
+    <GameSettingsContext.Provider value={[noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder, currentRound, setCurrentRound]}>
       {props.children}
     </GameSettingsContext.Provider>
   )

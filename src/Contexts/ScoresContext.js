@@ -6,10 +6,16 @@ export const ScoresContext = createContext();
 const ScoresContextProvider = (props) => {
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState({});
-  const [scoreByTeam, setScoreByTeam] = useState([{
-    "team": 1,
-    "score": 0
-  }]);
+  const [scoreByTeam, setScoreByTeam] = useState([
+    {
+      "team": 1,
+      "score": 0
+    },
+    {
+      "team": 2,
+      "score": 0
+    }
+  ]);
 
 
 
