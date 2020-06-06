@@ -1,47 +1,43 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router'
-import { ScoresContext } from '../Contexts/ScoresContext'
+import React, { useContext, useEffect, useState } from "react";
+import { Button } from "@material-ui/core";
 
-const ResultBoard = () => {
-    const history = useHistory();
-    const [scoreByTeam, setScoreByTeam] = useContext(ScoresContext);
-    let teamStanding;
+const ResultBoard = (props) => {
+  const getTeamStanding = () => {
+    let newTeamStanding = props.scoreByTeam;
 
-    const getTeamStanding = () => {
-        let standing = scoreByTeam;
-        console.log('getTeamStanding: standing =', scoreByTeam);
+    const listItems = newTeamStanding.map((item) => (
+      <li key={item.team}>
+        Lag {item.team} - {item.score} poäng
+      </li>
+    ));
 
-        //standing.sort(sortByHighestScore);
+    return <ul>{listItems}</ul>;
+  };
 
-        const listItems = standing.map((item) =>
-            <li>{item.team} - {item.score}</li>
-        );
+  const sortByHighestScore = (a, b) => {
+    let comparison = 0;
 
-        return <ul>{listItems}</ul>;
+    if (a.score > b.score) {
+      comparison = 1;
+    } else if (a.score < b.score) {
+      comparison = -1;
     }
+    return comparison;
+  };
 
-    const sortByHighestScore = (a, b) => {
-        let comparison = 0;
+  function handleOnClick() {
+    props.nextRound();
+  }
 
-        if (a.score > b.score) {
-            comparison = 1;
-        } else if (a.score < b.score) {
-            comparison = -1;
-        }
-        return comparison;
-    }
+  return (
+    <React.Fragment>
+      <h2>Resultat:</h2>
+      {getTeamStanding()}
+      <Button variant="contained" color="primary" onClick={handleOnClick}>
+        Börja Nästa Omgång
+      </Button>
+    </React.Fragment>
+  );
+};
 
-    teamStanding = getTeamStanding();
-
-    return (
-        <React.Fragment>
-
-            <br /><br /><br /><h2>Resultat:</h2><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            {teamStanding}
-            <Button variant="contained" color="primary" onClick={() => { history.push('/GameView') }}>Börja Nästa Omgång</Button>
-        </React.Fragment>
-    )
-}
-
-export default ResultBoard
+export default ResultBoard;

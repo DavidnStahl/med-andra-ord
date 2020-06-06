@@ -6,7 +6,7 @@ export const GameViewContext = createContext();
 const GameViewContextProvider = (props) => {
   const [progressValue, setProgressValue] = useState(1);
   const [count, setcount] = useState();
-  const [showTimer, setShowTimer] = useState();
+  const [showTimer, setShowTimer] = useState(false);
 
 
   return (
