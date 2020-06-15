@@ -19,7 +19,7 @@ const initialTeamScore = [
 
 const Main = () => {
   const [noOfTeams, setNoOfTeams] = useState(2);
-  const [noOfRounds, setNoOfRounds] = useState(5);
+  const [noOfRounds, setNoOfRounds] = useState(10);
   const [noOfSecondsPerTurn, setNoOfSecondsPerTurn] = useState(5);
   const [scoreByTeam, setScoreByTeam] = useState(initialTeamScore);
   return (
@@ -28,7 +28,14 @@ const Main = () => {
         <Home />
       </Route>
       <Route path="/GameSettings">
-        <GameSettings />
+        <GameSettings
+          setNoOfSecondsPerTurn={setNoOfSecondsPerTurn}
+          setNoOfRounds={setNoOfRounds}
+          noOfRounds={noOfRounds}
+          noOfTeams={noOfTeams}
+          setNoOfTeams={setNoOfTeams}
+          setScoreByTeam={setScoreByTeam}
+        />
       </Route>
       <Route path="/GameView">
         <Game

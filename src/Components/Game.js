@@ -76,7 +76,11 @@ function Game(props) {
       return (
         <div>
           Hello
-          <ResultBoard nextRound={nextRound} scoreByTeam={props.scoreByTeam} />
+          <ResultBoard
+            nextRound={nextRound}
+            scoreByTeam={props.scoreByTeam}
+            currentRound={currentRound}
+          />
         </div>
       );
     }

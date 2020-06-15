@@ -1,10 +1,9 @@
-html,body{
-  background-color: lightblue;
+html,
+body {
+  background-color: #c0c5ce;
   height: 100vh;
 }
 
 .App {
   text-align: center;
-
 }
-

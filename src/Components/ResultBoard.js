@@ -31,7 +31,7 @@ const ResultBoard = (props) => {
 
   return (
     <React.Fragment>
-      <h2>Resultat:</h2>
+      <h2>Resultat för runda {props.currentRound}:</h2>
       {getTeamStanding()}
       <Button variant="contained" color="primary" onClick={handleOnClick}>
         Börja Nästa Omgång
