@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Button, LinearProgress } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
@@ -29,19 +29,73 @@ const NextButton = styled(Button)({
 
 const WordPanel = (props) => {
   const [score, setScore] = useState(0);
-  const [word, setWord, getWords, wordProcessed] = useContext(WordsContext);
+  const [currentWord, setCurrentWord] = useState({ word: "", _id: 0 });
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [processedWordsCurrentRound, setProcessedWordsCurrentRound] = useState([]);
+
+  function saveProcessedWordsToLs() {
+    let lsUsedWords = localStorage.getItem("usedWords") ? JSON.parse(localStorage.getItem("usedWords")) : [];
+
+    debugger;
+    lsUsedWords = lsUsedWords.concat(processedWordsCurrentRound);
+    localStorage.setItem("usedWords", JSON.stringify(lsUsedWords));
+    setProcessedWordsCurrentRound([]);
+  }
 
   function timeOut() {
     props.updateScore(props.currentTeam, score);
     props.nextTurn();
     props.setShowWords(false);
+    wordProcessed(currentWord);
+    saveProcessedWordsToLs();
   }
+
+  useEffect(() => {
+    console.log("WordPanel words on useEffect=", props.words);
+
+    props.words.forEach((word) => {
+      console.log("word: ", word.word);
+    });
+
+    getNextWordIndex();
+  }, []);
+
+  useEffect(() => {
+    setCurrentWord(props.words[currentWordIndex]);
+  }, [currentWordIndex]);
 
   const history = useHistory();
 
+  const wordProcessed = (processedWord) => {
+    let wordsArray = props.words;
+    console.log("No of words left: ", props.words.length);
+
+    console.log("processed word = ", processedWord);
+    console.log("removing processed word from array: ", wordsArray[currentWordIndex]);
+
+    wordsArray.splice(currentWordIndex, 1);
+    console.log("removing word from array", processedWord);
+    props.setWords(wordsArray);
+    let processedWordsArray = [];
+    processedWordsArray = processedWordsArray.concat(processedWordsCurrentRound);
+    processedWordsArray.push(processedWord._id);
+    setProcessedWordsCurrentRound(processedWordsArray);
+    getNextWordIndex();
+  };
+
+  const getNextWordIndex = () => {
+    setCurrentWordIndex(getRandomInt(props.words.length));
+  };
+
+  function getRandomInt(max) {
+    console.log("max =", max);
+    console.log(Math.floor(Math.random() * Math.floor(max)));
+
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
   const handleProcessedWord = () => {
-    wordProcessed(word);
-    getWords();
+    wordProcessed(currentWord);
   };
   return (
     <React.Fragment>
@@ -50,7 +104,7 @@ const WordPanel = (props) => {
       <h2>Lag {props.currentTeam}</h2>
       <h1>Antal rätt: {score}</h1>
 
-      <h1>{word.word}</h1>
+      <h1>{currentWord.word}</h1>
       <br />
       <RightAnwserButton
         onClick={() => {
@@ -83,11 +137,7 @@ const WordPanel = (props) => {
       </Button>
       <br />
       <br />
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => history.push("/")}
-      >
+      <Button variant="contained" color="secondary" onClick={() => history.push("/")}>
         Gå tillbaka till start
       </Button>
     </React.Fragment>

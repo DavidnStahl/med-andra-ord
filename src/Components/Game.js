@@ -51,36 +51,20 @@ function Game(props) {
     if (showWords) {
       return (
         <div>
-          <WordPanel
-            noOfSecondsPerTurn={props.noOfSecondsPerTurn}
-            setShowWords={setShowWords}
-            nextTurn={nextTurn}
-            setScoreByTeam={props.setScoreByTeam}
-            currentTeam={currentTeam}
-            updateScore={updateScore}
-          />
+          <WordPanel noOfSecondsPerTurn={props.noOfSecondsPerTurn} setShowWords={setShowWords} nextTurn={nextTurn} setScoreByTeam={props.setScoreByTeam} currentTeam={currentTeam} updateScore={updateScore} words={props.words} setWords={props.setWords} />
         </div>
       );
     } else if (showNextTeam) {
       return (
         <div>
-          <LoadingScreen
-            nextTeam={currentTeam}
-            time={5}
-            setShowWords={setShowWords}
-            setShowNextTeam={setShowNextTeam}
-          />
+          <LoadingScreen nextTeam={currentTeam} time={5} setShowWords={setShowWords} setShowNextTeam={setShowNextTeam} />
         </div>
       );
     } else if (showResult) {
       return (
         <div>
           Hello
-          <ResultBoard
-            nextRound={nextRound}
-            scoreByTeam={props.scoreByTeam}
-            currentRound={currentRound}
-          />
+          <ResultBoard nextRound={nextRound} scoreByTeam={props.scoreByTeam} currentRound={currentRound} />
         </div>
       );
     }

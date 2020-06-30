@@ -5,6 +5,9 @@ import GameSettings from "./GameSettings";
 import GameView from "./GameView";
 import ResultBoard from "./ResultBoard";
 import Game from "./Game";
+import Axios from "axios";
+
+Axios.defaults.baseURL = "http://localhost:2000";
 
 const initialTeamScore = [
   {
@@ -22,29 +25,17 @@ const Main = () => {
   const [noOfRounds, setNoOfRounds] = useState(10);
   const [noOfSecondsPerTurn, setNoOfSecondsPerTurn] = useState(5);
   const [scoreByTeam, setScoreByTeam] = useState(initialTeamScore);
+  const [words, setWords] = useState([{ word: "kalle" }]);
   return (
     <Switch>
       <Route exact path="/">
         <Home />
       </Route>
       <Route path="/GameSettings">
-        <GameSettings
-          setNoOfSecondsPerTurn={setNoOfSecondsPerTurn}
-          setNoOfRounds={setNoOfRounds}
-          noOfRounds={noOfRounds}
-          noOfTeams={noOfTeams}
-          setNoOfTeams={setNoOfTeams}
-          setScoreByTeam={setScoreByTeam}
-        />
+        <GameSettings setWords={setWords} words={words} setNoOfSecondsPerTurn={setNoOfSecondsPerTurn} setNoOfRounds={setNoOfRounds} noOfRounds={noOfRounds} noOfTeams={noOfTeams} setNoOfTeams={setNoOfTeams} setScoreByTeam={setScoreByTeam} />
       </Route>
-      <Route path="/GameView">
-        <Game
-          noOfSecondsPerTurn={noOfSecondsPerTurn}
-          scoreByTeam={scoreByTeam}
-          setScoreByTeam={setScoreByTeam}
-          noOfRounds={noOfRounds}
-          noOfTeams={noOfTeams}
-        />
+      <Route path="/Game">
+        <Game setWords={setWords} words={words} noOfSecondsPerTurn={noOfSecondsPerTurn} scoreByTeam={scoreByTeam} setScoreByTeam={setScoreByTeam} noOfRounds={noOfRounds} noOfTeams={noOfTeams} />
       </Route>
     </Switch>
   );

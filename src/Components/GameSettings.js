@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, FormControl, MenuItem, InputLabel, Select, Typography, Slider } from "@material-ui/core";
+import { Button, FormControl, MenuItem, InputLabel, Select, Typography, Slider, CircularProgress } from "@material-ui/core";
 import { useHistory } from "react-router";
-import { GameSettingsContext } from "../Contexts/GameSettingsContext";
-import { ScoresContext } from "../Contexts/ScoresContext";
+import Axios from "axios";
+import { WordsContext } from "../Contexts/WordsContext";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -52,8 +52,9 @@ const timeMarks = [
 
 const GameSettings = (props) => {
   const history = useHistory();
+  const [loadWords, setLoadWords] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [props.words]);
   const classes = useStyles();
 
   const handleNoOfTeamsChange = (event) => {
@@ -90,63 +91,108 @@ const GameSettings = (props) => {
     return `${value} sekunder`;
   };
 
+  function startGame() {
+    setLoadWords(true);
+    console.log("start game!");
+    console.log("loadwords=", loadWords);
+    fetchWords()
+      .then((result) => {
+        props.setWords(result);
+
+        console.log("result=", result);
+        console.log("words=", props.words);
+
+        setLoadWords(false);
+        history.push("/Game", { words: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function fetchWords() {
+    const lsUsedWords = JSON.parse(localStorage.getItem("usedWords"));
+
+    let usedWordsIds = [];
+
+    if (lsUsedWords) {
+      lsUsedWords.forEach((word) => {
+        usedWordsIds.push(word);
+      });
+    }
+
+    console.log("usedWordsIds=", usedWordsIds);
+    return new Promise((resolve, reject) => {
+      Axios.post("/words", usedWordsIds)
+        .then((result) => {
+          resolve(result.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   return (
     <React.Fragment>
-      <h2>Välj spelformat</h2>
-      <Button
-        variant="contained"
-        color="#4f5b66"
-        onClick={() => {
-          history.push("/GameView");
-        }}
-      >
-        Starta spel
-      </Button>
-      <br />
-      <br />
-      <Button
-        variant="outlined"
-        color="#4f5b66"
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        Gå tillbaka till start
-      </Button>
-      <br />
+      {loadWords ? (
+        <div>
+          <CircularProgress></CircularProgress>
+          <br />
+          <h2>Laddar ord..</h2>
+        </div>
+      ) : (
+        <div>
+          <h2>Välj spelformat</h2>
+          <Button variant="contained" onClick={startGame}>
+            Starta spel
+          </Button>
+          <br />
+          <br />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            Gå tillbaka till start
+          </Button>
+          <br />
 
-      <FormControl variant="filled" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-filled-label">Antal lag</InputLabel>
-        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={props.noOfTeams} onChange={handleNoOfTeamsChange}>
-          <MenuItem value={2}>
-            <em>2</em>
-          </MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl variant="filled" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-filled-label">Antal omgångar</InputLabel>
-        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={props.noOfRounds} onChange={handleNoOfRoundsChange}>
-          <MenuItem value={10}>
-            <em>10</em>
-          </MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={30}>30</MenuItem>
-          <MenuItem value={40}>40</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
-          <MenuItem value={60}>60</MenuItem>
-          <MenuItem value={70}>70</MenuItem>
-        </Select>
-      </FormControl>
-      <Typography id="discrete-slider-custom" gutterBottom className={classes.typo}>
-        Tid per omgång (sekunder)
-      </Typography>
-      <Slider className={classes.slider} defaultValue={20} step={null} valueLabelDisplay="on" marks={timeMarks} onChange={handleNoOfSecondsPerRoundChange} getAriaValueText={getValueText} aria-labelledby="discrete-slider-custom" />
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel id="demo-simple-select-filled-label">Antal lag</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={props.noOfTeams} onChange={handleNoOfTeamsChange}>
+              <MenuItem value={2}>
+                <em>2</em>
+              </MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel id="demo-simple-select-filled-label">Antal omgångar</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={props.noOfRounds} onChange={handleNoOfRoundsChange}>
+              <MenuItem value={10}>
+                <em>10</em>
+              </MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={30}>30</MenuItem>
+              <MenuItem value={40}>40</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={60}>60</MenuItem>
+              <MenuItem value={70}>70</MenuItem>
+            </Select>
+          </FormControl>
+          <Typography id="discrete-slider-custom" gutterBottom className={classes.typo}>
+            Tid per omgång (sekunder)
+          </Typography>
+          <Slider className={classes.slider} defaultValue={20} step={null} valueLabelDisplay="on" marks={timeMarks} onChange={handleNoOfSecondsPerRoundChange} getAriaValueText={getValueText} aria-labelledby="discrete-slider-custom" />
+        </div>
+      )}
     </React.Fragment>
   );
 };

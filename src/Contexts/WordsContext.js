@@ -1,95 +1,89 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 //import axios from 'axios';
 //import fs from 'fs';
 
 export const WordsContext = createContext();
 //const API = 'http://localhost:1337/words';
-
+/*
 const data = [
   {
-    "word": "corona"
+    word: "corona",
   },
   {
-    "word": "sally"
+    word: "sally",
   },
   {
-    "word": "coronafall"
+    word: "coronafall",
   },
   {
-    "word": "brother"
+    word: "brother",
   },
   {
-    "word": "ciara"
+    word: "ciara",
   },
   {
-    "word": "världsrekord"
+    word: "världsrekord",
   },
   {
-    "word": "nanne"
+    word: "nanne",
   },
   {
-    "word": "sport-bloggen"
+    word: "sport-bloggen",
   },
   {
-    "word": "deltagaren"
+    word: "deltagaren",
   },
   {
-    "word": "världsrekordet"
+    word: "världsrekordet",
   },
   {
-    "word": "arbetskraftsinvandring"
+    word: "arbetskraftsinvandring",
   },
   {
-    "word": "ferm"
+    word: "ferm",
   },
   {
-    "word": "elma"
+    word: "elma",
   },
   {
-    "word": "skidskytte-vm"
+    word: "skidskytte-vm",
   },
   {
-    "word": "efterfesten"
+    word: "efterfesten",
   },
   {
-    "word": "faith"
+    word: "faith",
   },
   {
-    "word": "äventyr"
+    word: "äventyr",
   },
   {
-    "word": "coronautbrottet"
+    word: "coronautbrottet",
   },
   {
-    "word": "kryssningsfartyget"
+    word: "kryssningsfartyget",
   },
   {
-    "word": "jämställda"
+    word: "jämställda",
   },
   {
-    "word": "norgren"
+    word: "norgren",
   },
   {
-    "word": "t-centralen"
+    word: "t-centralen",
   },
   {
-    "word": "öfk"
-  }
+    word: "öfk",
+  },
 ];
-
-
+*/
 
 const WordsContextProvider = (props) => {
   const [word, setWord] = useState({
     word: "",
-    index: 0
+    _id: 0,
   });
-  const [wordList, setWordList] = useState(data);
-
-  useEffect(() => {
-    getWords();
-  }, [])
-
+  const [wordList, setWordList] = useState([]);
 
   const wordProcessed = (processedWord) => {
     console.log(`processed word: ${JSON.stringify(processedWord)}`);
@@ -97,29 +91,27 @@ const WordsContextProvider = (props) => {
     wordsArray.splice(processedWord.index, 1);
     setWordList(wordsArray);
     getWords();
-  }
+  };
 
   const getWords = () => {
     setWord(() => {
       let wordIndex = getRandomInt(wordList.length);
       let wordObj = {
         word: wordList[wordIndex].word,
-        index: wordIndex
+        index: wordIndex,
       };
       return wordObj;
-    })
+    });
+
+    const setWords = (words) => {
+      setWordList(words);
+    };
 
     function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
     }
+  };
+  return <WordsContext.Provider value={[word, setWord, wordList, getWords, wordProcessed]}>{props.children}</WordsContext.Provider>;
+};
 
-  }
-  return (
-    <WordsContext.Provider value={[word, setWord, getWords, wordProcessed]}>
-      {props.children}
-    </WordsContext.Provider>
-  )
-}
-
-
-export default WordsContextProvider
+export default WordsContextProvider;

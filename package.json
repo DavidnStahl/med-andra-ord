@@ -1,5 +1,5 @@
 {
-  "homepage": "http://fredrikstaahl.github.io/med-andra-ord",
+  "homepage": "http://fredrikstaahl.github.io/medandraord",
   "name": "med-andra-ord",
   "version": "0.1.0",
   "private": true,
@@ -9,8 +9,11 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-charts": "^3.0.15",
@@ -23,7 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"

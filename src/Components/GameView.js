@@ -9,44 +9,18 @@ import ResultBoard from "./ResultBoard";
 import WordPanel from "./WordPanel";
 import Timer from "./Timer";
 
-const GameView = () => {
+const GameView = (props) => {
   const [showWordPanel, setShowWordPanel] = useState(true);
   const [showNextTeam, setShowNextTeam] = useState(false);
   const [word, setWord, getWords, wordProcessed] = useContext(WordsContext);
-  const [score, setScore, scoreByTeam, setScoreByTeam] = useContext(
-    ScoresContext
-  );
-  const [
-    noOfTeams,
-    setNoOfTeams,
-    noOfRounds,
-    setNoOfRounds,
-    noOfSecondsPerRound,
-    setNoOfSecondsPerRound,
-    count,
-    setCount,
-    progressValue,
-    setProgressValue,
-    currentTeam,
-    setCurrentTeam,
-    turnOrder,
-    setTurnOrder,
-    currentRound,
-    setCurrentRound,
-  ] = useContext(GameSettingsContext);
-  const [
-    LoadingprogressValue,
-    setLoadingProgressValue,
-    Loadingcounter,
-    setLoadingcounter,
-  ] = useContext(LoadingScreenContext);
+  const [score, setScore, scoreByTeam, setScoreByTeam] = useContext(ScoresContext);
+  const [noOfTeams, setNoOfTeams, noOfRounds, setNoOfRounds, noOfSecondsPerRound, setNoOfSecondsPerRound, count, setCount, progressValue, setProgressValue, currentTeam, setCurrentTeam, turnOrder, setTurnOrder, currentRound, setCurrentRound] = useContext(GameSettingsContext);
+  const [LoadingprogressValue, setLoadingProgressValue, Loadingcounter, setLoadingcounter] = useContext(LoadingScreenContext);
   const [newRound, setNewRound] = useState(false);
   let game;
 
   const endTurn = () => {
-    console.log(
-      "team: " + currentTeam + " ended with " + score + " correct answers"
-    );
+    console.log("team: " + currentTeam + " ended with " + score + " correct answers");
     let newScoreByTeam = scoreByTeam;
     console.log("newscoreByTeam=", newScoreByTeam);
     newScoreByTeam[currentTeam - 1].score = score;
@@ -94,11 +68,8 @@ const GameView = () => {
       if (!newRound && showWordPanel) {
         return (
           <div>
-            <Timer
-              noOfSeconds={noOfSecondsPerRound}
-              setShowTimer={setShowWordPanel}
-            />
-            <WordPanel />
+            <Timer noOfSeconds={noOfSecondsPerRound} setShowTimer={setShowWordPanel} />
+            <WordPanel words={props.location.state.words} setWords={props.setWords} />
           </div>
         );
       } else {
@@ -107,10 +78,7 @@ const GameView = () => {
     } else if (showNextTeam) {
       return (
         <div>
-          <Timer
-            noOfSeconds={noOfSecondsPerRound}
-            setShowTimer={setShowNextTeam}
-          />
+          <Timer noOfSeconds={noOfSecondsPerRound} setShowTimer={setShowNextTeam} />
           <LoadingScreen NextTeam={currentTeam} />
         </div>
       );
