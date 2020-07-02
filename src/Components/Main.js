@@ -7,7 +7,7 @@ import ResultBoard from "./ResultBoard";
 import Game from "./Game";
 import Axios from "axios";
 
-Axios.defaults.baseURL = "http://localhost:2000";
+Axios.defaults.baseURL = "https://medandraord.herokuapp.com";
 
 const initialTeamScore = [
   {
@@ -22,8 +22,8 @@ const initialTeamScore = [
 
 const Main = () => {
   const [noOfTeams, setNoOfTeams] = useState(2);
-  const [noOfRounds, setNoOfRounds] = useState(10);
-  const [noOfSecondsPerTurn, setNoOfSecondsPerTurn] = useState(5);
+  const [noOfRounds, setNoOfRounds] = useState(1);
+  const [noOfSecondsPerTurn, setNoOfSecondsPerTurn] = useState(20);
   const [scoreByTeam, setScoreByTeam] = useState(initialTeamScore);
   const [words, setWords] = useState([{ word: "kalle" }]);
   return (

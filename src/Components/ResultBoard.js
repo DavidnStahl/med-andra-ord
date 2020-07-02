@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 const ResultBoard = (props) => {
+  const history = useHistory();
   const getTeamStanding = () => {
     let newTeamStanding = props.scoreByTeam;
 
@@ -31,13 +33,19 @@ const ResultBoard = (props) => {
 
   return (
     <React.Fragment>
-      <h2>Resultat för runda {props.currentRound}:</h2>
+      {!props.endOfGame ? <h2>Resultat för runda {props.currentRound}:</h2> : <h2>Spelet är över! Resultat:</h2>}
+
       {getTeamStanding()}
-      <Button variant="contained" color="primary" onClick={handleOnClick}>
-        Börja Nästa Omgång
-      </Button>
+      {!props.endOfGame ? (
+        <Button variant="contained" color="primary" onClick={handleOnClick}>
+          Börja Nästa Omgång
+        </Button>
+      ) : (
+        <Button variant="contained" color="primary" onClick={history.push("/GameSettings")}>
+          Spela igen
+        </Button>
+      )}
     </React.Fragment>
   );
 };
-
 export default ResultBoard;

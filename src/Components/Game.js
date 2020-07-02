@@ -10,6 +10,7 @@ function Game(props) {
   const [showResult, setShowResult] = useState(false);
   const [currentRound, setCurrentRound] = useState(1);
   const [currentTeam, setCurrentTeam] = useState(1);
+  const [endOfGame, setEndOfGame] = useState(false);
 
   function nextTurn() {
     if (currentTeam < props.noOfTeams) {
@@ -19,6 +20,8 @@ function Game(props) {
       if (currentRound < props.noOfRounds) {
         endOfRound();
       } else {
+        setEndOfGame(true);
+        setShowResult(true);
         console.log("end of game");
       }
     }
@@ -64,7 +67,7 @@ function Game(props) {
       return (
         <div>
           Hello
-          <ResultBoard nextRound={nextRound} scoreByTeam={props.scoreByTeam} currentRound={currentRound} />
+          <ResultBoard endOfGame={endOfGame} nextRound={nextRound} scoreByTeam={props.scoreByTeam} currentRound={currentRound} />
         </div>
       );
     }

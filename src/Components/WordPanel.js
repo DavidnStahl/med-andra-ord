@@ -36,7 +36,6 @@ const WordPanel = (props) => {
   function saveProcessedWordsToLs() {
     let lsUsedWords = localStorage.getItem("usedWords") ? JSON.parse(localStorage.getItem("usedWords")) : [];
 
-    debugger;
     lsUsedWords = lsUsedWords.concat(processedWordsCurrentRound);
     localStorage.setItem("usedWords", JSON.stringify(lsUsedWords));
     setProcessedWordsCurrentRound([]);
