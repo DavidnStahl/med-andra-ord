@@ -8,7 +8,7 @@ import { GameSettingsContext } from "../Contexts/GameSettingsContext";
 import Timer from "./Timer";
 
 const RightAnwserButton = styled(Button)({
-  background: "  rgba(82,255,125,1)",
+  background: "#FFA000",
   border: 0,
   borderRadius: 3,
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -18,7 +18,7 @@ const RightAnwserButton = styled(Button)({
 });
 
 const NextButton = styled(Button)({
-  background: "rgba(255,157,82,1)",
+  background: "#009688",
   border: 0,
   borderRadius: 3,
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -68,12 +68,9 @@ const WordPanel = (props) => {
   const wordProcessed = (processedWord) => {
     let wordsArray = props.words;
     console.log("No of words left: ", props.words.length);
-
-    console.log("processed word = ", processedWord);
     console.log("removing processed word from array: ", wordsArray[currentWordIndex]);
 
     wordsArray.splice(currentWordIndex, 1);
-    console.log("removing word from array", processedWord);
     props.setWords(wordsArray);
     let processedWordsArray = [];
     processedWordsArray = processedWordsArray.concat(processedWordsCurrentRound);
@@ -100,7 +97,7 @@ const WordPanel = (props) => {
     <React.Fragment>
       <Timer timeOut={timeOut} time={props.noOfSecondsPerTurn} />
       <br />
-      <h2>Lag {props.currentTeam}</h2>
+      <h2>{props.currentTeamName}</h2>
       <h1>Antal rätt: {score}</h1>
 
       <h1>{currentWord.word}</h1>

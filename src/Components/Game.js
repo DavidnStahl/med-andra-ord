@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Timer from "./Timer";
 import WordPanel from "./WordPanel";
 import LoadingScreen from "./LoadingScreen";
 import ResultBoard from "./ResultBoard";
@@ -51,23 +50,23 @@ function Game(props) {
   }
 
   function renderGame() {
+    console.log("teamnames=", props.teamNames);
     if (showWords) {
       return (
         <div>
-          <WordPanel noOfSecondsPerTurn={props.noOfSecondsPerTurn} setShowWords={setShowWords} nextTurn={nextTurn} setScoreByTeam={props.setScoreByTeam} currentTeam={currentTeam} updateScore={updateScore} words={props.words} setWords={props.setWords} />
+          <WordPanel noOfSecondsPerTurn={props.noOfSecondsPerTurn} setShowWords={setShowWords} nextTurn={nextTurn} setScoreByTeam={props.setScoreByTeam} currentTeamName={props.teamNames[currentTeam - 1]} currentTeam={currentTeam} updateScore={updateScore} words={props.words} setWords={props.setWords} />
         </div>
       );
     } else if (showNextTeam) {
       return (
         <div>
-          <LoadingScreen nextTeam={currentTeam} time={5} setShowWords={setShowWords} setShowNextTeam={setShowNextTeam} />
+          <LoadingScreen nextTeam={props.teamNames[currentTeam - 1]} time={5} setShowWords={setShowWords} setShowNextTeam={setShowNextTeam} />
         </div>
       );
     } else if (showResult) {
       return (
         <div>
-          Hello
-          <ResultBoard endOfGame={endOfGame} nextRound={nextRound} scoreByTeam={props.scoreByTeam} currentRound={currentRound} />
+          <ResultBoard teamNames={props.teamNames} endOfGame={endOfGame} nextRound={nextRound} scoreByTeam={props.scoreByTeam} currentRound={currentRound} />
         </div>
       );
     }

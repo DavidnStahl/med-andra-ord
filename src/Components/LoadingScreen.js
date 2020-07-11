@@ -14,7 +14,7 @@ const LoadingScreen = (props) => {
 
   return (
     <div>
-      <h2>Näst på tur: Lag {props.nextTeam}</h2>
+      <h2>Näst på tur: {props.nextTeam}</h2>
       <h2>Nästa lag börjar om..</h2>
       <Timer timeOut={timeOut} time={props.time} />
     </div>

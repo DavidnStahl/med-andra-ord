@@ -9,7 +9,7 @@ const ResultBoard = (props) => {
 
     const listItems = newTeamStanding.map((item) => (
       <li key={item.team}>
-        Lag {item.team} - {item.score} poäng
+        {props.teamNames[item.team - 1]} - {item.score} poäng
       </li>
     ));
 
@@ -31,6 +31,32 @@ const ResultBoard = (props) => {
     props.nextRound();
   }
 
+  function handlePlayAgain() {
+    history.push("/");
+  }
+
+  if (!props.endOfGame) {
+    return (
+      <React.Fragment>
+        <h2>Resultat för runda {props.currentRound}</h2>
+        {getTeamStanding()}
+        <Button variant="contained" onClick={handleOnClick}>
+          Nästa runda
+        </Button>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <div>
+        <h2>Spelet är över! Resultat:</h2>
+        {getTeamStanding()}
+        <Button variant="contained" color="primary" onClick={handlePlayAgain}>
+          Spela igen
+        </Button>
+      </div>
+    );
+  }
+  /*
   return (
     <React.Fragment>
       {!props.endOfGame ? <h2>Resultat för runda {props.currentRound}:</h2> : <h2>Spelet är över! Resultat:</h2>}
@@ -41,11 +67,12 @@ const ResultBoard = (props) => {
           Börja Nästa Omgång
         </Button>
       ) : (
-        <Button variant="contained" color="primary" onClick={history.push("/GameSettings")}>
+        <Button variant="contained" color="primary" onClick={history.push("/")}>
           Spela igen
         </Button>
       )}
     </React.Fragment>
   );
+  */
 };
 export default ResultBoard;
